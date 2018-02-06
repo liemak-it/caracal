@@ -91,6 +91,7 @@ module Caracal
           @image_offset_v        = DEFAULT_IMAGE_OFFSET_V
           @image_relative_from_h = DEFAULT_IMAGE_RELATIVE_FROM_H
           @image_relative_from_v = DEFAULT_IMAGE_RELATIVE_FROM_V
+          @image_wrap            = DEFAULT_IMAGE_WRAP
 
           super options, &block
         end
@@ -138,7 +139,7 @@ module Caracal
         end
 
         # symbols
-        [:align, :image_wrap, :position, :relative_from_h, :relative_from_v].each do |m|
+        [:align, :wrap, :position, :relative_from_h, :relative_from_v].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@image_#{ m }", value.to_s.to_sym)
           end
