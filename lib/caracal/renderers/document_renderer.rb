@@ -149,7 +149,7 @@ module Caracal
           end
           xml['w'].r run_options do
             xml['w'].drawing do
-              xml['wp'].anchor({ distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, simplePos: 0, relativeHeight: 2 }) do
+              xml['wp'].anchor({ allowOverlap: 1, behindDoc: 1, distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, layoutInCell: 1, locked: 0, simplePos: 0, relativeHeight: 2 }) do
                 xml['wp'].simplePos({ x: 0, y: 0 })
                 xml['wp'].positionH({ relativeFrom: 'rightMargin' }) do
                   xml['wp'].posOffset -1802603
@@ -159,6 +159,7 @@ module Caracal
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].effectExtent({ t: 0, b: 0, r: 0, l: 0 })
+                xml['wp'].wrapSquare({ wrapText: 'bothSides' })
                 xml['wp'].docPr({ id: rel_id, name: rel_name })
                 xml['a'].graphic do
                   xml['a'].graphicData({ uri: 'http://schemas.openxmlformats.org/drawingml/2006/picture' }) do
