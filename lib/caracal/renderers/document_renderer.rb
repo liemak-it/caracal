@@ -159,7 +159,13 @@ module Caracal
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].effectExtent({ t: 0, b: 0, r: 0, l: 0 })
-                xml['wp'].wrapSquare({ wrapText: 'bothSides' })
+                xml['wp'].send(model.image_wrap.to_s.slice(/square|none|top_and_bottom/), {
+                  wrapText: model.image_wrap.to_s.sub!(/^square_/, '').to_s,
+                  distR: model.formatted_right,
+                  distT: model.formatted_top,
+                  distB: model.formatted_bottom,
+                  distL: model.formatted_left
+                })
                 xml['wp'].docPr({ id: rel_id, name: rel_name })
                 xml['a'].graphic do
                   xml['a'].graphicData({ uri: 'http://schemas.openxmlformats.org/drawingml/2006/picture' }) do

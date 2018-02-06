@@ -27,6 +27,7 @@ module Caracal
         const_set(:DEFAULT_IMAGE_OFFSET_V,        0)           # units in pixels.
         const_set(:DEFAULT_IMAGE_RELATIVE_FROM_H, :left_margin)
         const_set(:DEFAULT_IMAGE_RELATIVE_FROM_V, :top_margin)
+        const_set(:DEFAULT_IMAGE_WRAP,            :top_and_bottom)
 
         # accessors
         attr_reader :image_url
@@ -67,6 +68,12 @@ module Caracal
         #     params: margin, page, paragraph, line, top_margin, bottom_margin,
         #     inside_margin, outside_margin
         attr_reader :image_relative_from_v
+
+        # @!attributes [r] image_wrap
+        #   @return [Symbol] Info about how to wrap text around image. Valid
+        #     params: :none, :square_both_sides, :square_largest, :square_left,
+        #     :square_right, :top_and_bottom
+        attr_reader :image_wrap
 
 
         # initialization
@@ -131,7 +138,7 @@ module Caracal
         end
 
         # symbols
-        [:align, :position, :relative_from_h, :relative_from_v].each do |m|
+        [:align, :image_wrap, :position, :relative_from_h, :relative_from_v].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@image_#{ m }", value.to_s.to_sym)
           end
