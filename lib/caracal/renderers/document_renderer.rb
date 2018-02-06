@@ -149,13 +149,13 @@ module Caracal
           end
           xml['w'].r run_options do
             xml['w'].drawing do
-              xml['wp'].send('anchor', { allowOverlap: 1, behindDoc: 1, distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, layoutInCell: 1, locked: 0, simplePos: 0, relativeHeight: 2 }) do
+              xml['wp'].send(model.image_position, { allowOverlap: 1, behindDoc: 1, distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, layoutInCell: 1, locked: 0, simplePos: 0, relativeHeight: 2 }) do
                 xml['wp'].simplePos({ x: 0, y: 0 })
-                xml['wp'].positionH({ relativeFrom: 'rightMargin' }) do
-                  xml['wp'].posOffset -1802603
+                xml['wp'].positionH({ relativeFrom: model.image_relative_from_h.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_h
                 end
-                xml['wp'].positionV({ relativeFrom: 'topMargin' }) do
-                  xml['wp'].posOffset 1079770
+                xml['wp'].positionV({ relativeFrom: model.image_relative_from_v.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_v
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].effectExtent({ t: 0, b: 0, r: 0, l: 0 })
