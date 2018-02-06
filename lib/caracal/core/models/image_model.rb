@@ -39,10 +39,33 @@ module Caracal
         attr_reader :image_bottom
         attr_reader :image_left
         attr_reader :image_right
+
+        # @!attributes [r] image_position
+        #   @return [Symbol] Method for controlling image placement. Valid
+        #     params: :inline, :anchor
         attr_reader :image_position
+
+
+        # Params for image positioning with :anchor
+
+        # @!attributes [r] image_offset_h
+        #   @return [Integer] Offset for absolute horizontal positioning
         attr_reader :image_offset_h
+
+        # @!attributes [r] image_offset_v
+        #   @return [Integer] Offset for absolute vertical positioning
         attr_reader :image_offset_v
+
+        # @!attributes [r] image_relative_from_h
+        #   @return [Symbol] Base for absolute horizontal positioning. Valid
+        #     params: column, character, left_margin, right_margin,
+        #     inside_margin, outside_margin,
         attr_reader :image_relative_from_h
+
+        # @!attributes [r] image_relative_from_v
+        #   @return [Symbol] Base for absolute vertical positioning. Valid
+        #     params: margin, page, paragraph, line, top_margin, bottom_margin,
+        #     inside_margin, outside_margin
         attr_reader :image_relative_from_v
 
 
