@@ -159,7 +159,7 @@ module Caracal
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].effectExtent({ t: 0, b: 0, r: 0, l: 0 })
-                xml['wp'].send(model.image_wrap.to_s.slice(/square|none|top_and_bottom/), {
+                xml['wp'].send(( 'wrap_' + model.image_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
                   wrapText: model.image_wrap.to_s.sub!(/^square_/, '').to_s,
                   distR: model.formatted_right,
                   distT: model.formatted_top,
