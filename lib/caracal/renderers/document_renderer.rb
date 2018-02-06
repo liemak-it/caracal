@@ -169,10 +169,10 @@ module Caracal
                 xml['wp'].docPr({ id: rel_id, name: rel_name })
                 xml['wp'].cNvGraphicFramePr do
                   xml['a'].graphicFrameLocks({
-                    :'xmlns:a' => 'http://schemas.openxmlformats.org/drawingml/2006/main',
-                    noChangeAspect: 1,
-                    noMove: 1,
-                    noResize: 1
+                    noChangeAspect: (model.image_lock ? 1 : 0),
+                    noMove: (model.image_lock ? 1 : 0),
+                    noResize: (model.image_lock ? 1 : 0),
+                    noSelect: (model.image_lock ? 1 : 0)
                   })
                 end
                 xml['a'].graphic do

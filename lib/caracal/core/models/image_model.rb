@@ -28,6 +28,7 @@ module Caracal
         const_set(:DEFAULT_IMAGE_RELATIVE_FROM_H, :left_margin)
         const_set(:DEFAULT_IMAGE_RELATIVE_FROM_V, :top_margin)
         const_set(:DEFAULT_IMAGE_WRAP,            :top_and_bottom)
+        const_set(:DEFAULT_IMAGE_LOCK,            false)
 
         # accessors
         attr_reader :image_url
@@ -75,6 +76,10 @@ module Caracal
         #     :square_right, :top_and_bottom
         attr_reader :image_wrap
 
+        # @!attributes [r] image_lock
+        #   @return [Boolean] Indicates whether image should be locked.
+        attr_reader :image_lock
+
 
         # initialization
         def initialize(options={}, &block)
@@ -92,6 +97,7 @@ module Caracal
           @image_relative_from_h = DEFAULT_IMAGE_RELATIVE_FROM_H
           @image_relative_from_v = DEFAULT_IMAGE_RELATIVE_FROM_V
           @image_wrap            = DEFAULT_IMAGE_WRAP
+          @image_lock            = DEFAULT_IMAGE_LOCK
 
           super options, &block
         end
@@ -142,6 +148,13 @@ module Caracal
         [:align, :wrap, :position, :relative_from_h, :relative_from_v].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@image_#{ m }", value.to_s.to_sym)
+          end
+        end
+
+        # miscellaneous
+        [:lock].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@image_#{ m }", value)
           end
         end
 
