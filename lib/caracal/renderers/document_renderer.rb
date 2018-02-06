@@ -151,10 +151,10 @@ module Caracal
             xml['w'].drawing do
               xml['wp'].anchor({ distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, simplePos: 0, relativeHeight: 2 }) do
                 xml['wp'].simplePos({ x: 0, y: 0 })
-                xml['wp'].positionH({ relativeFrom: rightMargin }) do
+                xml['wp'].positionH({ relativeFrom: 'rightMargin' }) do
                   xml['wp'].posOffset -1802603
                 end
-                xml['wp'].positionV({ relativeFrom: topMargin }) do
+                xml['wp'].positionV({ relativeFrom: 'topMargin' }) do
                   xml['wp'].posOffset 1079770
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
