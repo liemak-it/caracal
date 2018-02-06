@@ -149,7 +149,7 @@ module Caracal
           end
           xml['w'].r run_options do
             xml['w'].drawing do
-              xml['wp'].anchor({ allowOverlap: 1, behindDoc: 1, distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, layoutInCell: 1, locked: 0, simplePos: 0, relativeHeight: 2 }) do
+              xml['wp'].send('anchor', { allowOverlap: 1, behindDoc: 1, distR: model.formatted_right, distT: model.formatted_top, distB: model.formatted_bottom, distL: model.formatted_left, layoutInCell: 1, locked: 0, simplePos: 0, relativeHeight: 2 }) do
                 xml['wp'].simplePos({ x: 0, y: 0 })
                 xml['wp'].positionH({ relativeFrom: 'rightMargin' }) do
                   xml['wp'].posOffset -1802603
