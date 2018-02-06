@@ -167,6 +167,14 @@ module Caracal
                   distL: model.formatted_left
                 })
                 xml['wp'].docPr({ id: rel_id, name: rel_name })
+                xml['wp'].cNvGraphicFramePr do
+                  xml['a'].graphicFrameLocks({
+                    :'xmlns:a' => 'http://schemas.openxmlformats.org/drawingml/2006/main',
+                    noChangeAspect: 1,
+                    noMove: 1,
+                    noResize: 1
+                  })
+                end
                 xml['a'].graphic do
                   xml['a'].graphicData({ uri: 'http://schemas.openxmlformats.org/drawingml/2006/picture' }) do
                     xml['pic'].pic do
