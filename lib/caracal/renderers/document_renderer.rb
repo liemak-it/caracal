@@ -311,6 +311,12 @@ module Caracal
         end
       end
 
+      def render_text_field(xml, model)
+        xml['w'].r do
+          xml['w'].br
+        end
+      end
+
       def render_table(xml, model)
         borders = %w(top left bottom right horizontal vertical).select do |m|
           model.send("table_border_#{ m }_size") > 0
