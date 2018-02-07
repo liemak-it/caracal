@@ -19,6 +19,9 @@ module Caracal
           #============== PARAGRAPHS ==========================
 
           def text_field(*args, &block)
+            puts "args: #{args.inspect}"
+            puts "&block: #{&block.inspect}"
+
             options = Caracal::Utilities.extract_options!(args)
             options.merge!({ content: args.first }) if args.first
 
