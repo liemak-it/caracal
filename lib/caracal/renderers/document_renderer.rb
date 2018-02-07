@@ -60,7 +60,6 @@ module Caracal
       #
       def render_method_for_model(model)
         type = model.class.name.split('::').last.downcase.gsub('model', '')
-        puts "type: #{type.inspect}"
         "render_#{ type }"
       end
 
@@ -312,7 +311,7 @@ module Caracal
         end
       end
 
-      def render_text_field(xml, model)
+      def render_textfield(xml, model)
         xml['w'].r do
           xml['w'].br
         end
