@@ -1,4 +1,5 @@
 require 'caracal/core/models/base_model'
+require 'caracal/core/models/link_model'
 
 
 module Caracal
@@ -15,7 +16,6 @@ module Caracal
         #--------------------------------------------------
 
         # accessors
-        attr_reader :text_field_content
 
 
         #--------------------------------------------------
@@ -26,19 +26,21 @@ module Caracal
 
         # .run_attributes
         def run_attributes
+          {}
         end
 
 
         #========== SETTERS ===============================
 
-        # strings
-        [:text_content].each do |m|
-          puts "m: #{m.inspect}"
-          define_method "#{ m }" do |value|
-            puts "value: #{value.inspect}"
-            instance_variable_set("@text_field_#{ m }", value.to_s)
-          end
+        #=============== SUB-METHODS ===========================
+
+        # .text_field
+        def text_field
+          model = Caracal::Core::Models::LineBreakModel.new()
+          runs << model
+          model
         end
+
 
 
         #========== VALIDATION ============================
