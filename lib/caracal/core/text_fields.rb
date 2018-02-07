@@ -1,5 +1,4 @@
-require 'caracal/core/models/paragraph_model'
-require 'caracal/core/models/line_break_model'
+require 'caracal/core/models/text_field_model'
 require 'caracal/errors'
 
 
