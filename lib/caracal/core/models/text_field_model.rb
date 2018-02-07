@@ -11,27 +11,6 @@ module Caracal
       #
       class TextFieldModel < BaseModel
 
-        #--------------------------------------------------
-        # Configuration
-        #--------------------------------------------------
-
-        # accessors
-
-
-        #--------------------------------------------------
-        # Public Methods
-        #--------------------------------------------------
-
-        #========== GETTERS ===============================
-
-        # .run_attributes
-        def run_attributes
-          {}
-        end
-
-
-        #========== SETTERS ===============================
-
         #=============== SUB-METHODS ===========================
 
         # .text_field
@@ -42,12 +21,10 @@ module Caracal
         end
 
 
-
         #========== VALIDATION ============================
 
         def valid?
-          a = [:content]
-          a.map { |m| send("text_#{ m }") }.compact.size == a.size
+          true
         end
 
 
