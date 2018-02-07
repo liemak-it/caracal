@@ -60,6 +60,7 @@ module Caracal
       #
       def render_method_for_model(model)
         type = model.class.name.split('::').last.downcase.gsub('model', '')
+        puts "type: #{type.inspect}"
         "render_#{ type }"
       end
 

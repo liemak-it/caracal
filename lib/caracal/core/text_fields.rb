@@ -26,6 +26,7 @@ module Caracal
 
             model = Caracal::Core::Models::TextFieldModel.new(options, &block)
             if model.valid?
+              puts "model: #{model.inspect}"
               contents << model
             else
               raise Caracal::Errors::InvalidModelError, 'Paragraphs and headings, which delegate to the :p command, require at least one text string.'
