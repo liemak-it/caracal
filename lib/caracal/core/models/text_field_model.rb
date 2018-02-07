@@ -15,7 +15,7 @@ module Caracal
         #--------------------------------------------------
 
         # accessors
-        attr_reader :text_content
+        attr_reader :text_field_content
 
 
         #--------------------------------------------------
@@ -33,8 +33,10 @@ module Caracal
 
         # strings
         [:text_content].each do |m|
+          puts "m: #{m.inspect}"
           define_method "#{ m }" do |value|
-            instance_variable_set("@text_#{ m }", value.to_s)
+            puts "value: #{value.inspect}"
+            instance_variable_set("@text_field_#{ m }", value.to_s)
           end
         end
 
