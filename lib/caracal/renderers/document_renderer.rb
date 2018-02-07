@@ -313,7 +313,9 @@ module Caracal
 
       def render_textfield(xml, model)
         xml['w'].r do
-          xml['w'].br
+          xml['w'].r do
+            xml['w'].br
+          end
         end
       end
 
