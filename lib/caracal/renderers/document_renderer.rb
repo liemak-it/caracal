@@ -380,10 +380,7 @@ module Caracal
                         xml['w'].txbxContent do
                           xml['w'].p do
                             xml['w'].r run_options do
-                              render_run_attributes(xml, model, false)
-                              xml['w'].t do
-                                model.text_field_text_content
-                              end
+                              xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
                             end
                           end
                         end
