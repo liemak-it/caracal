@@ -313,11 +313,13 @@ module Caracal
       end
 
       def render_textfield(xml, model)
-        puts "model in render_textfield: #{model.inspect}"
-        puts "model.text_field_text_content: #{model.text_field_text_content.inspect}"
         unless ds = document.default_style
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end
+
+        rel      = document.relationship({ type: :text_field, target: 'Textfeld' })
+        rel_id   = rel.relationship_id
+        rel_name = "#{rel.formatted_target} #{rel_id}"
 
         xml['w'].p paragraph_options do
           xml['w'].r run_options do
@@ -349,7 +351,7 @@ module Caracal
                   distB: model.formatted_bottom,
                   distL: model.formatted_left
                 })
-                xml['wp'].docPr({ id: 1, name: 'Textfeld 1' })
+                xml['wp'].docPr({ id: rel_id, name: rel_name })
                 xml['wp'].cNvGraphicFramePr do
                   xml['a'].graphicFrameLocks({
                     noChangeAspect: (model.text_field_lock ? 1 : 0),
