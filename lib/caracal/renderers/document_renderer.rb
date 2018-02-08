@@ -24,6 +24,7 @@ module Caracal
               #============= CONTENTS ===================================
 
               document.contents.each do |model|
+                puts "model: #{model.inspect}"
                 method = render_method_for_model(model)
                 send(method, xml, model)
               end
@@ -312,6 +313,7 @@ module Caracal
       end
 
       def render_textfield(xml, model)
+        puts "model in render_textfield: #{model.inspect}"
         unless ds = document.default_style
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end

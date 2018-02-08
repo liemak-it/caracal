@@ -23,10 +23,8 @@ module Caracal
             options.merge!({ content: args.first }) if args.first
 
             model = Caracal::Core::Models::TextFieldModel.new(options, &block)
-            puts "model: #{model.inspect}"
             if model.valid?
               contents << model
-              puts "contents: #{contents.inspect}"
             else
               raise Caracal::Errors::InvalidModelError, 'Paragraphs and headings, which delegate to the :p command, require at least one text string.'
             end
