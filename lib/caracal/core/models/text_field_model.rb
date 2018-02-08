@@ -11,20 +11,136 @@ module Caracal
       #
       class TextFieldModel < BaseModel
 
-        #=============== SUB-METHODS ===========================
+        #-------------------------------------------------------------
+        # Configuration
+        #-------------------------------------------------------------
 
-        # .text_field
-        def text_field
-          model = Caracal::Core::Models::LineBreakModel.new()
-          runs << model
-          model
+        # constants
+
+        const_set(:DEFAULT_TEXT_FIELD_TEXT_CONTENT,    '')
+        const_set(:DEFAULT_TEXT_FIELD_OFFSET_H,        0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_OFFSET_V,        0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_TOP,             0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_BOTTOM,          0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_LEFT,            0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_RIGHT,           0)           # units in pixels.
+        const_set(:DEFAULT_TEXT_FIELD_RELATIVE_FROM_H, :left_margin)
+        const_set(:DEFAULT_TEXT_FIELD_RELATIVE_FROM_V, :top_margin)
+        const_set(:DEFAULT_TEXT_FIELD_LOCK,            false)
+
+
+        attr_reader :text_field_top
+        attr_reader :text_field_bottom
+        attr_reader :text_field_left
+        attr_reader :text_field_right
+
+        # @!attributes [r] text_field_width
+        #   @return [Integer] The width of the text field
+        attr_reader :text_field_width
+
+        # @!attributes [r] text_field_height
+        #   @return [Integer] The height of the text field
+        attr_reader :text_field_height
+
+        # @!attributes [r] text_field_offset_h
+        #   @return [Integer] Offset for horizontal positioning
+        attr_reader :text_field_offset_h
+
+        # @!attributes [r] text_field_offset_v
+        #   @return [Integer] Offset for vertical positioning
+        attr_reader :text_field_offset_v
+
+        # @!attributes [r] text_field_relative_from_h
+        #   @return [Symbol] Base for absolute horizontal positioning. Valid
+        #     params: column, character, left_margin, right_margin,
+        #     inside_margin, outside_margin,
+        attr_reader :text_field_relative_from_h
+
+        # @!attributes [r] text_field_relative_from_v
+        #   @return [Symbol] Base for absolute vertical positioning. Valid
+        #     params: margin, page, paragraph, line, top_margin, bottom_margin,
+        #     inside_margin, outside_margin
+        attr_reader :text_field_relative_from_v
+
+        # @!attributes [r] text_field_wrap
+        #   @return [Symbol] Info about how to wrap text around text_field.
+        #     Valid params: :none, :square_both_sides, :square_largest,
+        #     :square_left, :square_right, :top_and_bottom
+        attr_reader :text_field_wrap
+
+        # @!attributes [r] text_field_lock
+        #   @return [Boolean] Indicates whether text field should be locked.
+        attr_reader :text_field_lock
+
+
+        # initialization
+        def initialize(options={}, &block)
+          @text_field_text_content    = DEFAULT_TEXT_FIELD_TEXT_CONTENT
+          @text_field_offset_h        = DEFAULT_TEXT_FIELD_OFFSET_H
+          @text_field_offset_v        = DEFAULT_TEXT_FIELD_OFFSET_V
+          @text_field_relative_from_h = DEFAULT_TEXT_FIELD_RELATIVE_FROM_H
+          @text_field_relative_from_v = DEFAULT_TEXT_FIELD_RELATIVE_FROM_V
+          @text_field_lock            = DEFAULT_TEXT_FIELD_LOCK
+
+          super options, &block
         end
 
+        #-------------------------------------------------------------
+        # Public Methods
+        #-------------------------------------------------------------
+
+        #=============== GETTERS ==============================
+
+        [:width, :height].each do |m|
+          define_method "formatted_#{ m }" do
+            value = send("image_#{ m }")
+            pixels_to_emus(value, image_ppi)
+          end
+        end
+
+        [:top, :bottom, :left, :right, :offset_h, :offset_v].each do |m|
+          define_method "formatted_#{ m }" do
+            value = send("image_#{ m }")
+            pixels_to_emus(value, 72)
+          end
+        end
+
+
+        #=============== SETTERS ==============================
+
+        # integers
+        [:top, :bottom, :left, :right, :height, :offset_h, :offset_v, :width].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@text_field_#{ m }", value.to_i)
+          end
+        end
+
+        # strings
+        [:text_content].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@text_field_#{ m }", value.to_s)
+          end
+        end
+
+        # symbols
+        [:wrap, :relative_from_h, :relative_from_v].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@text_field_#{ m }", value.to_s.to_sym)
+          end
+        end
+
+        # miscellaneous
+        [:lock].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@text_field_#{ m }", value)
+          end
+        end
 
         #========== VALIDATION ============================
 
         def valid?
-          true
+          dims = [:width, :height].map { |m| send("text_field_#{ m }") }
+          dims.all? { |d| d > 0 }
         end
 
 
@@ -34,7 +150,7 @@ module Caracal
         private
 
         def option_keys
-          [:content]
+          [:text, :height, :lock, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :width]
         end
 
         def method_missing(method, *args, &block)
