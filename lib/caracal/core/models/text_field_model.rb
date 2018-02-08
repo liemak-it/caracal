@@ -96,7 +96,7 @@ module Caracal
         [:width, :height].each do |m|
           define_method "formatted_#{ m }" do
             value = send("image_#{ m }")
-            pixels_to_emus(value, image_ppi)
+            pixels_to_emus(value, 72)
           end
         end
 
