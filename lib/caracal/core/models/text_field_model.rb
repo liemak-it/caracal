@@ -82,8 +82,6 @@ module Caracal
           @text_field_relative_from_h = DEFAULT_TEXT_FIELD_RELATIVE_FROM_H
           @text_field_relative_from_v = DEFAULT_TEXT_FIELD_RELATIVE_FROM_V
           @text_field_lock            = DEFAULT_TEXT_FIELD_LOCK
-          @text_field_width           = DEFAULT_TEXT_FIELD_WIDTH
-          @text_field_height          = DEFAULT_TEXT_FIELD_HEIGHT
           @text_field_wrap            = DEFAULT_TEXT_FIELD_WRAP
 
           super options, &block
