@@ -343,7 +343,7 @@ module Caracal
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
-                  wrapText: model.text_field_wrap.to_s.sub!(/^square_/, '').to_s,
+                  wrapText: model.text_field_wrap.to_s.sub(/^square_/, '').to_s,
                   distR: model.formatted_right,
                   distT: model.formatted_top,
                   distB: model.formatted_bottom,
