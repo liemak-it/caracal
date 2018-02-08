@@ -95,14 +95,14 @@ module Caracal
 
         [:width, :height].each do |m|
           define_method "formatted_#{ m }" do
-            value = send("image_#{ m }")
+            value = send("text_field_#{ m }")
             pixels_to_emus(value, 72)
           end
         end
 
         [:top, :bottom, :left, :right, :offset_h, :offset_v].each do |m|
           define_method "formatted_#{ m }" do
-            value = send("image_#{ m }")
+            value = send("text_field_#{ m }")
             pixels_to_emus(value, 72)
           end
         end
