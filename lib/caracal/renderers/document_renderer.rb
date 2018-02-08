@@ -317,10 +317,6 @@ module Caracal
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end
 
-        rel      = document.relationship({ type: :text_field, target: 'Textfeld' })
-        rel_id   = rel.relationship_id
-        rel_name = "#{rel.formatted_target} #{rel_id}"
-
         xml['w'].p paragraph_options do
           xml['w'].r run_options do
             xml['w'].drawing do
@@ -351,7 +347,7 @@ module Caracal
                   distB: model.formatted_bottom,
                   distL: model.formatted_left
                 })
-                xml['wp'].docPr({ id: rel_id, name: rel_name })
+                xml['wp'].docPr({ id: model.text_field_id, name: model.text_field_name })
                 xml['wp'].cNvGraphicFramePr do
                   xml['a'].graphicFrameLocks({
                     noChangeAspect: (model.text_field_lock ? 1 : 0),

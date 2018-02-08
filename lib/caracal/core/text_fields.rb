@@ -13,14 +13,25 @@ module Caracal
         base.class_eval do
 
           #-------------------------------------------------------------
+          # Configuration
+          #-------------------------------------------------------------
+
+          # @!attributes [r] text_field_counter
+          #   @return [Integer|Nil]
+          attr_reader :text_field_counter
+
+
+          #-------------------------------------------------------------
           # Public Methods
           #-------------------------------------------------------------
 
           def text_field(*args, &block)
-            puts "args: #{args.inspect}"
+            id = text_field_counter.to_i + 1
+            @text_field_counter = id
 
             options = Caracal::Utilities.extract_options!(args)
             options.merge!({ content: args.first }) if args.first
+            options.merge!({ id: id, name: "Textfield #{id}" })
 
             model = Caracal::Core::Models::TextFieldModel.new(options, &block)
             if model.valid?

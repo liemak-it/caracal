@@ -74,9 +74,16 @@ module Caracal
         attr_reader :text_field_lock
 
         # @!attributes [r] text_field_text_content
-        #   @return [Boolean] The text to be inserted in text field
+        #   @return [String] The text to be inserted in text field
         attr_reader :text_field_text_content
 
+        # @!attributes [r] text_field_id
+        #   @return [Integer]
+        attr_reader :text_field_id
+
+        # @!attributes [r] text_field_name
+        #   @return [Name]
+        attr_reader :text_field_name
 
         # initialization
         def initialize(options={}, &block)
@@ -115,14 +122,14 @@ module Caracal
         #=============== SETTERS ==============================
 
         # integers
-        [:top, :bottom, :left, :right, :height, :offset_h, :offset_v, :width].each do |m|
+        [:top, :bottom, :left, :right, :height, :offset_h, :offset_v, :width, :id].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value.to_i)
           end
         end
 
         # strings
-        [:text_content].each do |m|
+        [:text_content, :name].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value.to_s)
           end
@@ -156,7 +163,7 @@ module Caracal
         private
 
         def option_keys
-          [:text, :height, :lock, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :width]
+          [:name, :id, :text, :height, :lock, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :width]
         end
 
         def pixels_to_emus(value, ppi)
