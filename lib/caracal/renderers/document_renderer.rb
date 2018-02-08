@@ -314,7 +314,7 @@ module Caracal
 
       def render_textfield(xml, model)
         puts "model in render_textfield: #{model.inspect}"
-        puts "model.text_field_wrap: #{model.text_field_wrap.inspect}"
+        puts "model.text_field_text_content: #{model.text_field_text_content.inspect}"
         unless ds = document.default_style
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end
@@ -381,7 +381,9 @@ module Caracal
                           xml['w'].p do
                             xml['w'].r run_options do
                               render_run_attributes(xml, model, false)
-                              xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
+                              xml['w'].t do
+                                model.text_field_text_content
+                              end
                             end
                           end
                         end
