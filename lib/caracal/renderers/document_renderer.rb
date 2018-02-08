@@ -312,11 +312,90 @@ module Caracal
       end
 
       def render_textfield(xml, model)
-        xml['w'].p do
-          xml['w'].r do
-            xml['w'].br
+        unless ds = document.default_style
+          raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
+        end
+
+        xml['w'].p paragraph_options do
+          xml['w'].r run_options do
+            xml['w'].drawing do
+              xml['wp'].anchor({
+                allowOverlap: 1,
+                behindDoc: 1,
+                distR: 457200,
+                distT: 457200,
+                distB: 457200,
+                distL: 457200,
+                layoutInCell: 1,
+                locked: 0,
+                simplePos: 0,
+                relativeHeight: 2
+              }) do
+                xml['wp'].simplePos({ x: 0, y: 0 })
+                xml['wp'].positionH({ relativeFrom: 'column' }) do
+                  xml['wp'].posOffset 799431
+                end
+                xml['wp'].positionV({ relativeFrom: 'paragraph' }) do
+                  xml['wp'].posOffset -172944
+                end
+                xml['wp'].extent({ cx: 2791838, cy: 2383277 })
+                xml['wp'].square({
+                  wrapText: 'bothSides',
+                  distR: 457200,
+                  distT: 457200,
+                  distB: 457200,
+                  distL: 457200
+                })
+                xml['wp'].docPr({ id: 1, name: 'Textfeld 1' })
+                xml['wp'].cNvGraphicFramePr do
+                  xml['a'].graphicFrameLocks({
+                    noChangeAspect: 0,
+                    noMove: 0,
+                    noResize:0,
+                    noSelect: 0
+                  })
+                end
+                xml['a'].graphic({ :'xmlns:a' => "http://schemas.openxmlformats.org/drawingml/2006/main" }) do
+                  xml['a'].graphicData({ uri: 'http://schemas.microsoft.com/office/word/2010/wordprocessingShape' }) do
+                    xml['wps'].wsp do
+                      xml['wps'].cNvSpPr({ txBox: 1 })
+                      xml['wps'].spPr do
+                        xml['a'].xfrm do
+                          xml['a'].ext({ cx: 2791838, cy: 2383277 })
+                        end
+                        xml['a'].prstGeom({ prst: 'rect' })
+                        xml['a'].solidFill do
+                          xml['a'].sysClr({ lastClr: '000000', val: 'window' })
+                        end
+                        xml['a'].ln do
+                          xml['a'].solidFill do
+                            xml['a'].prstClr({ var: 'black' })
+                          end
+                        end
+                      end
+                      xml['wps'].txbx do
+                        xml['w'].txbxContent do
+                          xml['w'].p do
+                            xml['w'].r do
+                              xml['w'].t do
+                                'Hallo Welt'
+                              end
+                            end
+                          end
+                        end
+                      end
+                      xml['wps'].bodyPr({ bIns: 45720, forceAA: 1, lIns: 0, rIns: 91440, tIns: 45720 }) do
+                        xml['a'].prstTxWarp({ prst: 'textNoShape' })
+                        xml['a'].noAutofit
+                      end
+                    end
+                  end
+                end
+              end
+            end
           end
         end
+
       end
 
       def render_table(xml, model)
