@@ -338,7 +338,7 @@ module Caracal
                 xml['wp'].positionV({ relativeFrom: model.text_field_relative_from_v.to_s.camelize(:lower) }) do
                   xml['wp'].posOffset model.formatted_offset_v
                 end
-                xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height }
+                xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
                 xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
                   wrapText: model.text_field_wrap.to_s.sub!(/^square_/, '').to_s,
                   distR: model.formatted_right,
