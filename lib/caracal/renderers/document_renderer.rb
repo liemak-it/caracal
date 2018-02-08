@@ -325,7 +325,7 @@ module Caracal
                 distR: model.formatted_right,
                 distT: model.formatted_top,
                 distB: model.formatted_bottom,
-                distL: model.formatted_left
+                distL: model.formatted_left,
                 layoutInCell: 1,
                 locked: 0,
                 simplePos: 0,
