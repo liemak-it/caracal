@@ -355,7 +355,7 @@ module Caracal
                     noSelect: 0
                   })
                 end
-                xml['a'].graphic({ :'xmlns:a' => "http://schemas.openxmlformats.org/drawingml/2006/main" }) do
+                xml['a'].graphic do
                   xml['a'].graphicData({ uri: 'http://schemas.microsoft.com/office/word/2010/wordprocessingShape' }) do
                     xml['wps'].wsp do
                       xml['wps'].cNvSpPr({ txBox: 1 })
@@ -369,7 +369,7 @@ module Caracal
                         end
                         xml['a'].ln do
                           xml['a'].solidFill do
-                            xml['a'].prstClr({ var: 'black' })
+                            xml['a'].prstClr({ val: 'black' })
                           end
                         end
                       end
