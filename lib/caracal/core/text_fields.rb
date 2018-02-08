@@ -16,8 +16,6 @@ module Caracal
           # Public Methods
           #-------------------------------------------------------------
 
-          #============== PARAGRAPHS ==========================
-
           def text_field(*args, &block)
             puts "args: #{args.inspect}"
 
@@ -32,12 +30,6 @@ module Caracal
             end
             model
           end
-
-          #-------------------------------------------------------------
-          # Private Methods
-          #-------------------------------------------------------------
-          private
-
         end
       end
     end
