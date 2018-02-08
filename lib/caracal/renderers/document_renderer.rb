@@ -322,37 +322,37 @@ module Caracal
               xml['wp'].anchor({
                 allowOverlap: 1,
                 behindDoc: 1,
-                distR: 457200,
-                distT: 457200,
-                distB: 457200,
-                distL: 457200,
+                distR: model.formatted_right,
+                distT: model.formatted_top,
+                distB: model.formatted_bottom,
+                distL: model.formatted_left
                 layoutInCell: 1,
                 locked: 0,
                 simplePos: 0,
                 relativeHeight: 2
               }) do
                 xml['wp'].simplePos({ x: 0, y: 0 })
-                xml['wp'].positionH({ relativeFrom: 'column' }) do
-                  xml['wp'].posOffset 799431
+                xml['wp'].positionH({ relativeFrom: model.text_field_relative_from_h.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_h
                 end
-                xml['wp'].positionV({ relativeFrom: 'paragraph' }) do
-                  xml['wp'].posOffset -172944
+                xml['wp'].positionV({ relativeFrom: model.text_field_relative_from_v.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_v
                 end
-                xml['wp'].extent({ cx: 2791838, cy: 2383277 })
-                xml['wp'].wrapSquare({
-                  wrapText: 'bothSides',
-                  distR: 457200,
-                  distT: 457200,
-                  distB: 457200,
-                  distL: 457200
+                xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height }
+                xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
+                  wrapText: model.text_field_wrap.to_s.sub!(/^square_/, '').to_s,
+                  distR: model.formatted_right,
+                  distT: model.formatted_top,
+                  distB: model.formatted_bottom,
+                  distL: model.formatted_left
                 })
                 xml['wp'].docPr({ id: 1, name: 'Textfeld 1' })
                 xml['wp'].cNvGraphicFramePr do
                   xml['a'].graphicFrameLocks({
-                    noChangeAspect: 0,
-                    noMove: 0,
-                    noResize:0,
-                    noSelect: 0
+                    noChangeAspect: (model.text_field_lock ? 1 : 0),
+                    noMove: (model.text_field_lock ? 1 : 0),
+                    noResize: (model.text_field_lock ? 1 : 0),
+                    noSelect: (model.text_field_lock ? 1 : 0)
                   })
                 end
                 xml['a'].graphic do
@@ -361,7 +361,7 @@ module Caracal
                       xml['wps'].cNvSpPr({ txBox: 1 })
                       xml['wps'].spPr do
                         xml['a'].xfrm do
-                          xml['a'].ext({ cx: 2791838, cy: 2383277 })
+                          xml['a'].ext({ cx: model.formatted_width, cy: model.formatted_height })
                         end
                         xml['a'].prstGeom({ prst: 'rect' })
                         xml['a'].solidFill do
@@ -377,7 +377,7 @@ module Caracal
                         xml['w'].txbxContent do
                           xml['w'].p do
                             xml['w'].r do
-                              xml['w'].t({ 'xml:space' => 'preserve' }, 'Hallo World!')
+                              xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
                             end
                           end
                         end
