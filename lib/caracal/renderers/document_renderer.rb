@@ -323,8 +323,8 @@ module Caracal
           xml['w'].r run_options do
             xml['w'].drawing do
               xml['wp'].anchor({
-                allowOverlap: 1,
-                behindDoc: 1,
+                allowOverlap: 0,
+                behindDoc: 0,
                 distR: model.formatted_right,
                 distT: model.formatted_top,
                 distB: model.formatted_bottom,
