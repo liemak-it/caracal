@@ -342,8 +342,8 @@ module Caracal
                   xml['wp'].posOffset model.formatted_offset_v
                 end
                 xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
-                xml['wp'].wrapSquare({
-                  wrapText: 'largest',
+                xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
+                  wrapText: model.text_field_wrap.to_s.sub!(/^square_/, '').to_s,
                   distR: model.formatted_right,
                   distT: model.formatted_top,
                   distB: model.formatted_bottom,
@@ -379,7 +379,8 @@ module Caracal
                       xml['wps'].txbx do
                         xml['w'].txbxContent do
                           xml['w'].p do
-                            xml['w'].r do
+                            xml['w'].r run_options do
+                              render_run_attributes(xml, model, false)
                               xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
                             end
                           end
