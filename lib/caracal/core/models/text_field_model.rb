@@ -73,6 +73,10 @@ module Caracal
         #   @return [Boolean] Indicates whether text field should be locked.
         attr_reader :text_field_lock
 
+        # @!attributes [r] text_field_text_content
+        #   @return [Boolean] The text to be inserted in text field
+        attr_reader :text_field_text_content
+
 
         # initialization
         def initialize(options={}, &block)
