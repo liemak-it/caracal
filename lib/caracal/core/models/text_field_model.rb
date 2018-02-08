@@ -155,6 +155,14 @@ module Caracal
           [:text, :height, :lock, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :width]
         end
 
+        def pixels_to_emus(value, ppi)
+          pixels        = value.to_i
+          inches        = pixels / ppi.to_f
+          emus_per_inch = 914400
+
+          emus = (inches * emus_per_inch).to_i
+        end
+
         def method_missing(method, *args, &block)
           # I'm on the fence with respect to this implementation. We're ignoring
           # :method_missing errors to allow syntax flexibility for paragraph-type

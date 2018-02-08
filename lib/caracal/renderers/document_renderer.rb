@@ -314,6 +314,7 @@ module Caracal
 
       def render_textfield(xml, model)
         puts "model in render_textfield: #{model.inspect}"
+        puts "model.text_field_wrap: #{model.text_field_wrap.inspect}"
         unless ds = document.default_style
           raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
         end
