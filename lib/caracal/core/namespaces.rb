@@ -24,6 +24,7 @@ module Caracal
               { prefix: 'xmlns:m',    href: 'http://schemas.openxmlformats.org/officeDocument/2006/math'              },
               { prefix: 'xmlns:v',    href: 'urn:schemas-microsoft-com:vml'                                           },
               { prefix: 'xmlns:wp',   href: 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'  },
+              { prefix: 'xmlns:wps',  href: 'http://schemas.microsoft.com/office/word/2010/wordprocessingShape'       },
               { prefix: 'xmlns:w10',  href: 'urn:schemas-microsoft-com:office:word'                                   },
               { prefix: 'xmlns:w',    href: 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'            },
               { prefix: 'xmlns:wne',  href: 'http://schemas.microsoft.com/office/word/2006/wordml'                    },
