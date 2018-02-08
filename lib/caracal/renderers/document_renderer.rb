@@ -339,7 +339,7 @@ module Caracal
                   xml['wp'].posOffset -172944
                 end
                 xml['wp'].extent({ cx: 2791838, cy: 2383277 })
-                xml['wp'].square({
+                xml['wp'].wrapSquare({
                   wrapText: 'bothSides',
                   distR: 457200,
                   distT: 457200,
@@ -377,9 +377,7 @@ module Caracal
                         xml['w'].txbxContent do
                           xml['w'].p do
                             xml['w'].r do
-                              xml['w'].t do
-                                'Hallo Welt'
-                              end
+                              xml['w'].t({ 'xml:space' => 'preserve' }, 'Hallo World!')
                             end
                           end
                         end
