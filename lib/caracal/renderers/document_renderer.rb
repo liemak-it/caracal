@@ -311,6 +311,94 @@ module Caracal
         end
       end
 
+      def render_textfield(xml, model)
+        unless ds = document.default_style
+          raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
+        end
+
+        xml['w'].p paragraph_options do
+          xml['w'].r run_options do
+            xml['w'].drawing do
+              xml['wp'].anchor({
+                allowOverlap: 0,
+                behindDoc: 0,
+                distR: model.formatted_right,
+                distT: model.formatted_top,
+                distB: model.formatted_bottom,
+                distL: model.formatted_left,
+                layoutInCell: 1,
+                locked: 0,
+                simplePos: 0,
+                relativeHeight: 2
+              }) do
+                xml['wp'].simplePos({ x: 0, y: 0 })
+                xml['wp'].positionH({ relativeFrom: model.text_field_relative_from_h.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_h
+                end
+                xml['wp'].positionV({ relativeFrom: model.text_field_relative_from_v.to_s.camelize(:lower) }) do
+                  xml['wp'].posOffset model.formatted_offset_v
+                end
+                xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
+                xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
+                  wrapText: model.text_field_wrap.to_s.sub(/^square_/, '').to_s,
+                  distR: model.formatted_right,
+                  distT: model.formatted_top,
+                  distB: model.formatted_bottom,
+                  distL: model.formatted_left
+                })
+                xml['wp'].docPr({ id: model.text_field_id, name: model.text_field_name })
+                xml['wp'].cNvGraphicFramePr do
+                  xml['a'].graphicFrameLocks({
+                    noChangeAspect: (model.text_field_lock ? 1 : 0),
+                    noMove: (model.text_field_lock ? 1 : 0),
+                    noResize: (model.text_field_lock ? 1 : 0),
+                    noSelect: (model.text_field_lock ? 1 : 0)
+                  })
+                end
+                xml['a'].graphic do
+                  xml['a'].graphicData({ uri: 'http://schemas.microsoft.com/office/word/2010/wordprocessingShape' }) do
+                    xml['wps'].wsp do
+                      xml['wps'].cNvSpPr({ txBox: 1 })
+                      xml['wps'].spPr do
+                        xml['a'].xfrm do
+                          xml['a'].ext({ cx: model.formatted_width, cy: model.formatted_height })
+                        end
+                        xml['a'].prstGeom({ prst: 'rect' })
+                        xml['a'].solidFill do
+                          xml['a'].sysClr({ lastClr: '000000', val: 'window' })
+                        end
+                        xml['a'].ln do
+                          xml['a'].solidFill do
+                            xml['a'].srgbClr({ val: model.text_field_border_color })
+                          end
+                        end
+                      end
+                      xml['wps'].txbx do
+                        xml['w'].txbxContent do
+                          xml['w'].p do
+                            xml['w'].r run_options do
+                              xml['w'].rPr do
+                                xml['w'].rStyle({ :'w:val' => model.text_field_char_style })
+                              end
+                              xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
+                            end
+                          end
+                        end
+                      end
+                      xml['wps'].bodyPr({ bIns: 45720, forceAA: 1, lIns: 0, rIns: 91440, tIns: 45720 }) do
+                        xml['a'].prstTxWarp({ prst: 'textNoShape' })
+                        xml['a'].noAutofit
+                      end
+                    end
+                  end
+                end
+              end
+            end
+          end
+        end
+
+      end
+
       def render_table(xml, model)
         borders = %w(top left bottom right horizontal vertical).select do |m|
           model.send("table_border_#{ m }_size") > 0
