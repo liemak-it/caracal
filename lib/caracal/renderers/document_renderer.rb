@@ -24,7 +24,6 @@ module Caracal
               #============= CONTENTS ===================================
 
               document.contents.each do |model|
-                puts "model: #{model.inspect}"
                 method = render_method_for_model(model)
                 send(method, xml, model)
               end
@@ -370,7 +369,7 @@ module Caracal
                         end
                         xml['a'].ln do
                           xml['a'].solidFill do
-                            xml['a'].prstClr({ val: 'black' })
+                            xml['a'].a.srgbClr({ val: '000000' })
                           end
                         end
                       end
