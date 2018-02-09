@@ -96,6 +96,10 @@ module Caracal
         #   @return [Symbol] The style to be applied to text field text
         attr_reader :text_field_char_style
 
+        # @!attributes [r] text_field_paragraphs
+        #   @return [<ParagraphModel>] An array of paragraph models
+        attr_reader :text_field_paragraphs
+
         # initialization
         def initialize(options={}, &block)
           @text_field_text_content    = DEFAULT_TEXT_FIELD_TEXT_CONTENT
@@ -107,6 +111,7 @@ module Caracal
           @text_field_wrap            = DEFAULT_TEXT_FIELD_WRAP
           @text_field_border_color    = DEFAULT_TEXT_FIELD_BORDER_COLOR
           @text_field_char_style      = DEFAULT_TEXT_FIELD_CHAR_STYLE
+          @text_field_paragraphs      = []
 
           super options, &block
         end
@@ -162,6 +167,17 @@ module Caracal
           end
         end
 
+        define_method 'paragraphs' do |value|
+          paragraph_model = Caracal::Core::Models::ParagraphModel.new({
+            style: @text_field_char_style,
+            content: @text_field_text_content
+          }) unless @text_field_text_content.blank?
+
+          paragraphs = ([paragraph_model] + value).flatten.compact
+
+          instance_variable_set("@text_field_paragraphs", paragraphs)
+        end
+
         #========== VALIDATION ============================
 
         def valid?
@@ -176,7 +192,7 @@ module Caracal
         private
 
         def option_keys
-          [:border_color, :char_style, :height, :id, :lock, :name, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :text, :width]
+          [:border_color, :char_style, :height, :id, :lock, :name, :offset_h, :offset_v, :paragraphs, :relative_from_h, :relative_from_v, :text, :width]
         end
 
         def pixels_to_emus(value, ppi)
