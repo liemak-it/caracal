@@ -369,7 +369,7 @@ module Caracal
                         end
                         xml['a'].ln do
                           xml['a'].solidFill do
-                            xml['a'].a.srgbClr({ val: '000000' })
+                            xml['a'].srgbClr({ val: model.text_field_border_color })
                           end
                         end
                       end
