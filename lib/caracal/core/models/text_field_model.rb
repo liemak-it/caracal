@@ -27,7 +27,7 @@ module Caracal
         const_set(:DEFAULT_TEXT_FIELD_RELATIVE_FROM_H, :left_margin)
         const_set(:DEFAULT_TEXT_FIELD_RELATIVE_FROM_V, :top_margin)
         const_set(:DEFAULT_TEXT_FIELD_LOCK,            false)
-        const_set(:DEFAULT_TEXT_FIELD_WRAP,            :largest)
+        const_set(:DEFAULT_TEXT_FIELD_WRAP,            :square_largest)
         const_set(:DEFAULT_TEXT_FIELD_BORDER_COLOR,    '000000')
         const_set(:DEFAULT_TEXT_FIELD_CHAR_STYLE,      :normal)
 
