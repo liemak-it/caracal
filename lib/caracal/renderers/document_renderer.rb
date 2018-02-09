@@ -377,6 +377,9 @@ module Caracal
                         xml['w'].txbxContent do
                           xml['w'].p do
                             xml['w'].r run_options do
+                              xml['w'].rPr do
+                                xml['w'].rStyle({ :'w:val' => model.text_field_char_style })
+                              end
                               xml['w'].t({ 'xml:space' => 'preserve' }, model.text_field_text_content)
                             end
                           end

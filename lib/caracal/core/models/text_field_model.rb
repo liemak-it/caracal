@@ -29,6 +29,8 @@ module Caracal
         const_set(:DEFAULT_TEXT_FIELD_LOCK,            false)
         const_set(:DEFAULT_TEXT_FIELD_WRAP,            :largest)
         const_set(:DEFAULT_TEXT_FIELD_BORDER_COLOR,    '000000')
+        const_set(:DEFAULT_TEXT_FIELD_CHAR_STYLE,      :normal)
+
 
 
         attr_reader :text_field_top
@@ -90,6 +92,10 @@ module Caracal
         #   @return [Integer] The color of the border
         attr_reader :text_field_border_color
 
+        # @!attributes [r] text_field_style
+        #   @return [Symbol] The style to be applied to text field text
+        attr_reader :text_field_char_style
+
         # initialization
         def initialize(options={}, &block)
           @text_field_text_content    = DEFAULT_TEXT_FIELD_TEXT_CONTENT
@@ -100,6 +106,7 @@ module Caracal
           @text_field_lock            = DEFAULT_TEXT_FIELD_LOCK
           @text_field_wrap            = DEFAULT_TEXT_FIELD_WRAP
           @text_field_border_color    = DEFAULT_TEXT_FIELD_BORDER_COLOR
+          @text_field_char_style      = DEFAULT_TEXT_FIELD_CHAR_STYLE
 
           super options, &block
         end
@@ -142,7 +149,7 @@ module Caracal
         end
 
         # symbols
-        [:wrap, :relative_from_h, :relative_from_v].each do |m|
+        [:char_style, :relative_from_h, :relative_from_v, :wrap].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value.to_s.to_sym)
           end
@@ -169,7 +176,7 @@ module Caracal
         private
 
         def option_keys
-          [:border_color, :height, :id, :lock, :name, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :text, :width]
+          [:border_color, :char_style, :height, :id, :lock, :name, :offset_h, :offset_v, :relative_from_h, :relative_from_v, :text, :width]
         end
 
         def pixels_to_emus(value, ppi)
