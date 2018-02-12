@@ -167,15 +167,18 @@ module Caracal
           end
         end
 
-        define_method 'paragraphs' do |value|
+        define_method 'paragraphs' do |paragraph_contents|
           paragraph_model = Caracal::Core::Models::ParagraphModel.new({
             style: @text_field_char_style,
             content: @text_field_text_content
           }) unless @text_field_text_content.blank?
 
-          paragraphs = ([paragraph_model] + value).flatten.compact
+          paragraph_models = paragraph_contents.map do |paragraph_content|
+            Caracal::Core::Models::ParagraphModel.new(paragraph_content)
+          end
+          all_models = ([paragraph_model] + paragraph_models).flatten.compact
 
-          instance_variable_set("@text_field_paragraphs", paragraphs)
+          instance_variable_set("@text_field_paragraphs", all_models)
         end
 
         #========== VALIDATION ============================
