@@ -367,9 +367,11 @@ module Caracal
                         xml['a'].solidFill do
                           xml['a'].sysClr({ lastClr: '000000', val: 'window' })
                         end
-                        xml['a'].ln do
-                          xml['a'].solidFill do
-                            xml['a'].srgbClr({ val: model.text_field_border_color })
+                        unless model.text_field_border_color == '000000'
+                          xml['a'].ln do
+                            xml['a'].solidFill do
+                              xml['a'].srgbClr({ val: model.text_field_border_color })
+                            end
                           end
                         end
                       end
