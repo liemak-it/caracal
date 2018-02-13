@@ -104,7 +104,7 @@ module Caracal
         end
 
         # symbols
-        [:align].each do |m|
+        [:align, :base].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@style_#{ m }", value.to_s.to_sym)
           end
@@ -139,23 +139,26 @@ module Caracal
         private
 
         def option_keys
-          [ :type,
+          [
+            :align,
+            :base,
             :bold,
-            :italic,
-            :underline,
-            :caps,
-            :top,
             :bottom,
-            :size,
-            :line,
-            :id,
-            :name,
+            :caps,
             :color,
             :font,
-            :align,
+            :id,
+            :indent_first,
             :indent_left,
             :indent_right,
-            :indent_first ]
+            :italic,
+            :line,
+            :name,
+            :size,
+            :top,
+            :type,
+            :underline
+          ]
         end
 
       end
