@@ -29,9 +29,7 @@ module Caracal
         const_set(:DEFAULT_TEXT_FIELD_LOCK,            false)
         const_set(:DEFAULT_TEXT_FIELD_WRAP,            :square_largest)
         const_set(:DEFAULT_TEXT_FIELD_BORDER_COLOR,    '000000')
-        const_set(:DEFAULT_TEXT_FIELD_CHAR_STYLE,      :normal)
-
-
+        const_set(:DEFAULT_TEXT_FIELD_PARAGRAPH_STYLE, 'Normal')
 
         attr_reader :text_field_top
         attr_reader :text_field_bottom
@@ -92,13 +90,17 @@ module Caracal
         #   @return [Integer] The color of the border
         attr_reader :text_field_border_color
 
-        # @!attributes [r] text_field_style
-        #   @return [Symbol] The style to be applied to text field text
-        attr_reader :text_field_char_style
+        # @!attributes [r] text_field_paragraph_style
+        #   @return [Symbol] Default style applied to text field`s paragraphs
+        attr_reader :text_field_paragraph_style
 
         # @!attributes [r] text_field_paragraphs
         #   @return [<ParagraphModel>] An array of paragraph models
         attr_reader :text_field_paragraphs
+
+        # @!attributes [r] text_field_lock
+        #   @return [Boolean] Indicates whether text field should be locked
+        attr_reader :text_field_lock
 
         # initialization
         def initialize(options={}, &block)
@@ -110,7 +112,7 @@ module Caracal
           @text_field_lock            = DEFAULT_TEXT_FIELD_LOCK
           @text_field_wrap            = DEFAULT_TEXT_FIELD_WRAP
           @text_field_border_color    = DEFAULT_TEXT_FIELD_BORDER_COLOR
-          @text_field_char_style      = DEFAULT_TEXT_FIELD_CHAR_STYLE
+          @text_field_paragraph_style = DEFAULT_TEXT_FIELD_PARAGRAPH_STYLE
           @text_field_paragraphs      = []
 
           super options, &block
@@ -147,21 +149,21 @@ module Caracal
         end
 
         # strings
-        [:text_content, :name].each do |m|
+        [:name, :paragraph_style, :text_content].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value.to_s)
           end
         end
 
         # symbols
-        [:char_style, :relative_from_h, :relative_from_v, :wrap].each do |m|
+        [:relative_from_h, :relative_from_v, :wrap, :lock].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value.to_s.to_sym)
           end
         end
 
         # miscellaneous
-        [:lock, :border_color].each do |m|
+        [:border_color].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_field_#{ m }", value)
           end
@@ -169,15 +171,16 @@ module Caracal
 
         define_method 'paragraphs' do |paragraph_contents|
           paragraph_model = Caracal::Core::Models::ParagraphModel.new({
-            style: @text_field_char_style,
-            content: @text_field_text_content
+            content: @text_field_paragraph_style
           }) unless @text_field_text_content.blank?
 
           paragraph_models = paragraph_contents.map do |paragraph_content|
+            # Use text field style if none specified for paragraph
+            paragraph_content[:style] ||= @text_field_paragraph_style
+
             Caracal::Core::Models::ParagraphModel.new(paragraph_content)
           end
           all_models = ([paragraph_model] + paragraph_models).flatten.compact
-
           instance_variable_set("@text_field_paragraphs", all_models)
         end
 
@@ -195,7 +198,7 @@ module Caracal
         private
 
         def option_keys
-          [:border_color, :char_style, :height, :id, :lock, :name, :offset_h, :offset_v, :paragraphs, :relative_from_h, :relative_from_v, :text, :width]
+          [:border_color, :height, :id, :lock, :name, :offset_h, :offset_v, :paragraphs, :paragraph_style, :relative_from_h, :relative_from_v, :text, :width]
         end
 
         def pixels_to_emus(value, ppi)
