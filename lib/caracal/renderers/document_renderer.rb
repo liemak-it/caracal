@@ -82,7 +82,9 @@ module Caracal
                 xml['w'].i(         { 'w:val'  => (attrs[:italic] ? '1' : '0') })             unless attrs[:italic].nil?
                 xml['w'].u(         { 'w:val'  => (attrs[:underline] ? 'single' : 'none') })  unless attrs[:underline].nil?
                 xml['w'].shd(       { 'w:fill' => attrs[:bgcolor], 'w:val' => 'clear' })      unless attrs[:bgcolor].nil?
-                xml['w'].vertAlign( { 'w:val' => attrs[:vertical_align] })                    unless attrs[:vertical_align].nil?
+                xml['w'].vertAlign( { 'w:val'  => attrs[:vertical_align] })                   unless attrs[:vertical_align].nil?
+                xml['w'].noProof(   { 'w:val'  => (attrs[:no_proof] ? '1' : '0') })           unless attrs[:no_proof].nil?
+
                 unless attrs[:font].nil?
                   f = attrs[:font]
                   xml['w'].rFonts( { 'w:ascii' => f, 'w:hAnsi' => f, 'w:eastAsia' => f, 'w:cs' => f })

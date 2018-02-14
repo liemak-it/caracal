@@ -25,6 +25,7 @@ module Caracal
         attr_reader :text_underline
         attr_reader :text_bgcolor
         attr_reader :text_vertical_align
+        attr_reader :text_no_proof
 
 
 
@@ -45,7 +46,8 @@ module Caracal
             italic:         text_italic,
             underline:      text_underline,
             bgcolor:        text_bgcolor,
-            vertical_align: text_vertical_align
+            vertical_align: text_vertical_align,
+            no_proof:       text_no_proof
           }
         end
 
@@ -53,7 +55,7 @@ module Caracal
         #========== SETTERS ===============================
 
         # booleans
-        [:bold, :italic, :underline].each do |m|
+        [:bold, :italic, :underline, :no_proof].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_#{ m }", !!value)
           end
@@ -95,7 +97,7 @@ module Caracal
         private
 
         def option_keys
-          [:content, :style, :font, :color, :size, :bold, :italic, :underline, :bgcolor, :vertical_align]
+          [:content, :style, :font, :color, :size, :bold, :italic, :underline, :bgcolor, :vertical_align, :no_proof]
         end
 
         def method_missing(method, *args, &block)
