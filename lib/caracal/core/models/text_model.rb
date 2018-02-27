@@ -26,6 +26,7 @@ module Caracal
         attr_reader :text_bgcolor
         attr_reader :text_vertical_align
         attr_reader :text_no_proof
+        attr_reader :text_spacing
 
 
 
@@ -48,6 +49,7 @@ module Caracal
             bgcolor:        text_bgcolor,
             vertical_align: text_vertical_align,
             no_proof:       text_no_proof
+            spacing:        text_spacing
           }
         end
 
@@ -62,7 +64,7 @@ module Caracal
         end
 
         # integers
-        [:size].each do |m|
+        [:size, :spacing].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@text_#{ m }", value.to_i)
           end
@@ -97,7 +99,20 @@ module Caracal
         private
 
         def option_keys
-          [:content, :style, :font, :color, :size, :bold, :italic, :underline, :bgcolor, :vertical_align, :no_proof]
+          [
+            :bgcolor,
+            :bold,
+            :color,
+            :content,
+            :font,
+            :italic,
+            :no_proof,
+            :size,
+            :spacing,
+            :style,
+            :underline,
+            :vertical_align
+          ]
         end
 
         def method_missing(method, *args, &block)

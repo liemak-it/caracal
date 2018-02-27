@@ -76,6 +76,7 @@ module Caracal
             xml['w'].rPr do
               unless attrs.empty?
                 xml['w'].rStyle(    { 'w:val'  => attrs[:style] })                            unless attrs[:style].nil?
+                xml['w'].spacing(   { 'w:val'  => attrs[:spacing] })                          unless attrs[:spacing].nil?
                 xml['w'].color(     { 'w:val'  => attrs[:color] })                            unless attrs[:color].nil?
                 xml['w'].sz(        { 'w:val'  => attrs[:size]  })                            unless attrs[:size].nil?
                 xml['w'].b(         { 'w:val'  => (attrs[:bold] ? '1' : '0') })               unless attrs[:bold].nil?
