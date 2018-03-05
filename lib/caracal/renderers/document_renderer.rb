@@ -76,13 +76,16 @@ module Caracal
             xml['w'].rPr do
               unless attrs.empty?
                 xml['w'].rStyle(    { 'w:val'  => attrs[:style] })                            unless attrs[:style].nil?
+                xml['w'].spacing(   { 'w:val'  => attrs[:spacing] })                          unless attrs[:spacing].nil?
                 xml['w'].color(     { 'w:val'  => attrs[:color] })                            unless attrs[:color].nil?
                 xml['w'].sz(        { 'w:val'  => attrs[:size]  })                            unless attrs[:size].nil?
                 xml['w'].b(         { 'w:val'  => (attrs[:bold] ? '1' : '0') })               unless attrs[:bold].nil?
                 xml['w'].i(         { 'w:val'  => (attrs[:italic] ? '1' : '0') })             unless attrs[:italic].nil?
                 xml['w'].u(         { 'w:val'  => (attrs[:underline] ? 'single' : 'none') })  unless attrs[:underline].nil?
                 xml['w'].shd(       { 'w:fill' => attrs[:bgcolor], 'w:val' => 'clear' })      unless attrs[:bgcolor].nil?
-                xml['w'].vertAlign( { 'w:val' => attrs[:vertical_align] })                    unless attrs[:vertical_align].nil?
+                xml['w'].vertAlign( { 'w:val'  => attrs[:vertical_align] })                   unless attrs[:vertical_align].nil?
+                xml['w'].noProof(   { 'w:val'  => (attrs[:no_proof] ? '1' : '0') })           unless attrs[:no_proof].nil?
+
                 unless attrs[:font].nil?
                   f = attrs[:font]
                   xml['w'].rFonts( { 'w:ascii' => f, 'w:hAnsi' => f, 'w:eastAsia' => f, 'w:cs' => f })
@@ -309,6 +312,87 @@ module Caracal
           render_run_attributes(xml, model, false)
           xml['w'].t({ 'xml:space' => 'preserve' }, model.text_content)
         end
+      end
+
+      def render_textfield(xml, model)
+        unless ds = document.default_style
+          raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
+        end
+
+        xml['w'].drawing do
+          xml['wp'].anchor({
+            allowOverlap: 0,
+            behindDoc: 0,
+            distR: model.formatted_right,
+            distT: model.formatted_top,
+            distB: model.formatted_bottom,
+            distL: model.formatted_left,
+            layoutInCell: 0,
+            locked: 1,
+            simplePos: 0,
+            relativeHeight: 2
+          }) do
+            xml['wp'].simplePos({ x: 0, y: 0 })
+            xml['wp'].positionH({ relativeFrom: model.text_field_relative_from_h.to_s.camelize(:lower) }) do
+              xml['wp'].posOffset model.formatted_offset_h
+            end
+            xml['wp'].positionV({ relativeFrom: model.text_field_relative_from_v.to_s.camelize(:lower) }) do
+              xml['wp'].posOffset model.formatted_offset_v
+            end
+            xml['wp'].extent({ cx: model.formatted_width, cy: model.formatted_height })
+            xml['wp'].send(( 'wrap_' + model.text_field_wrap.to_s.slice(/square|none|top_and_bottom/)).camelize(:lower), {
+              wrapText: model.text_field_wrap.to_s.sub(/^square_/, '').to_s,
+              distR: model.formatted_right,
+              distT: model.formatted_top,
+              distB: model.formatted_bottom,
+              distL: model.formatted_left
+            })
+            xml['wp'].docPr({ id: model.text_field_id, name: model.text_field_name })
+            xml['wp'].cNvGraphicFramePr do
+              xml['a'].graphicFrameLocks({
+                noChangeAspect: (model.text_field_lock ? 1 : 0),
+                noMove: (model.text_field_lock ? 1 : 0),
+                noResize: (model.text_field_lock ? 1 : 0),
+                noSelect: (model.text_field_lock ? 1 : 0)
+              })
+            end
+            xml['a'].graphic do
+              xml['a'].graphicData({ uri: 'http://schemas.microsoft.com/office/word/2010/wordprocessingShape' }) do
+                xml['wps'].wsp do
+                  xml['wps'].cNvSpPr({ txBox: 1 })
+                  xml['wps'].spPr do
+                    xml['a'].xfrm do
+                      xml['a'].ext({ cx: model.formatted_width, cy: model.formatted_height })
+                    end
+                    xml['a'].prstGeom({ prst: 'rect' })
+                    xml['a'].solidFill do
+                      xml['a'].sysClr({ lastClr: '000000', val: 'window' })
+                    end
+                    unless model.text_field_border_color == '000000'
+                      xml['a'].ln do
+                        xml['a'].solidFill do
+                          xml['a'].srgbClr({ val: model.text_field_border_color })
+                        end
+                      end
+                    end
+                  end
+                  xml['wps'].txbx do
+                    xml['w'].txbxContent do
+                      model.text_field_paragraphs.each do |p|
+                        render_paragraph(xml, p)
+                      end
+                    end
+                  end
+                  xml['wps'].bodyPr({ bIns: 45720, forceAA: 1, lIns: 0, rIns: 91440, tIns: 45720 }) do
+                    xml['a'].prstTxWarp({ prst: 'textNoShape' })
+                        xml['a'].noAutofit
+                      end
+                    end
+                  end
+                end
+          end
+        end
+
       end
 
       def render_table(xml, model)
