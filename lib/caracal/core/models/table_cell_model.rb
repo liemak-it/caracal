@@ -17,7 +17,7 @@ module Caracal
 
         # constants
         const_set(:DEFAULT_CELL_BACKGROUND,       'ffffff')
-        const_set(:DEFAULT_CELL_MARGINS,          Caracal::Core::Models::MarginModel.new({ top: 100, bottom: 100, left: 100, right: 100 }))
+        const_set(:DEFAULT_CELL_MARGINS,          Caracal::Core::Models::MarginModel.new({ top: 10, bottom: 20, left: 30, right: 40 }))
         const_set(:DEFAULT_CELL_VERTICAL_ALIGN,   :top)
 
         # accessors
@@ -159,7 +159,7 @@ module Caracal
         private
 
         def option_keys
-          [:background, :margins, :width, :vertical_align]
+          [:background, :margins, :width, :vertical_align, :top, :left]
         end
 
       end
