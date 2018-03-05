@@ -150,8 +150,14 @@ module Caracal
         end
 
         # hashes
-        define_method "#{:header_style}" do |value_hash|
-          rows[0].each { |header_col| header_col.apply_styles(value_hash) }
+        define_method "#{:header_style}" do |styling_info|
+          rows[0].each { |header_col| header_col.apply_styles(styling_info) }
+        end
+
+        define_method "#{:body_style}" do |styling_info|
+          (1..rows.length-1).each do |i|
+            rows[i].each { |body_col| body_col.apply_styles(styling_info) }
+          end
         end
 
         # .data
