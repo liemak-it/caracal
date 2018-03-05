@@ -48,7 +48,7 @@ module Caracal
             underline:      text_underline,
             bgcolor:        text_bgcolor,
             vertical_align: text_vertical_align,
-            no_proof:       text_no_proof
+            no_proof:       text_no_proof,
             spacing:        text_spacing
           }
         end
@@ -111,7 +111,8 @@ module Caracal
             :spacing,
             :style,
             :underline,
-            :vertical_align
+            :vertical_align,
+            :spacing
           ]
         end
 
