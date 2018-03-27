@@ -90,7 +90,7 @@ module Caracal
         # Convenient method to create list elements using an array
         def list_items(list_elements)
           @items = items
-          options = { type: :ordered, level: 0 }
+          options = { type: list_type, level: 0 }
 
           list_elements.each do |item|
             options[:content] = item
