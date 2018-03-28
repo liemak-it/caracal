@@ -19,16 +19,19 @@ module Caracal
         # constants
         const_set(:DEFAULT_LIST_TYPE,  :unordered)
         const_set(:DEFAULT_LIST_LEVEL, 0)
+        const_set(:DEFAULT_LIST_NO_BULLETS, false)
 
         # accessors
         attr_reader :list_type
         attr_reader :list_level
+        attr_reader :list_no_bullets
 
 
         # initialization
         def initialize(options={}, &block)
-          @list_type  = DEFAULT_LIST_TYPE
-          @list_level = DEFAULT_LIST_LEVEL
+          @list_type       = DEFAULT_LIST_TYPE
+          @list_level      = DEFAULT_LIST_LEVEL
+          @list_no_bullets = DEFAULT_LIST_NO_BULLETS
 
           super options, &block
         end
@@ -87,11 +90,17 @@ module Caracal
           end
         end
 
+        # booleans
+        [:no_bullets].each do |m|
+          define_method"#{ m }" do |value|
+            instance_variable_set("@list_#{m}", !!value)
+          end
+        end
+
         # Convenient method to create list elements using an array
         def list_items(list_elements)
           @items = items
-          options = { type: list_type, level: 0 }
-
+          options = { type: list_type, level: 0, no_bullets: list_no_bullets }
           list_elements.each do |item|
             options[:content] = item
             @items.push(Caracal::Core::Models::ListItemModel.new(options))
@@ -132,7 +141,7 @@ module Caracal
         private
 
         def option_keys
-          [:type, :level, :list_items]
+          [:type, :level, :list_items, :no_bullets]
         end
 
       end

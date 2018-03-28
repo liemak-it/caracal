@@ -23,6 +23,8 @@ module Caracal
         # to expected naming convention.)
         attr_reader  :list_item_type
         attr_reader  :list_item_level
+        attr_reader  :list_item_no_bullets
+
         alias_method :list_item_style,     :paragraph_style
         alias_method :list_item_color,     :paragraph_color
         alias_method :list_item_size,      :paragraph_size
@@ -50,6 +52,13 @@ module Caracal
         [:type].each do |m|
           define_method "#{ m }" do |value|
             instance_variable_set("@list_item_#{ m }", value.to_s.to_sym)
+          end
+        end
+
+        # booleans
+        [:no_bullets].each do |m|
+          define_method"#{ m }" do |value|
+            instance_variable_set("@list_item_#{ m }", !!value)
           end
         end
 
@@ -98,7 +107,7 @@ module Caracal
         private
 
         def option_keys
-          [:type, :level, :content, :style, :color, :size, :bold, :italic, :underline, :bgcolor]
+          [:type, :level, :content, :style, :color, :size, :bold, :italic, :underline, :bgcolor, :no_bullets]
         end
 
       end

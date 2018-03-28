@@ -247,9 +247,11 @@ module Caracal
 
         xml['w'].p paragraph_options do
           xml['w'].pPr do
-            xml['w'].numPr do
-              xml['w'].ilvl({ 'w:val' => model.list_item_level })
-              xml['w'].numId({ 'w:val' => list_num })
+            unless model.list_item_no_bullets
+              xml['w'].numPr do
+                xml['w'].ilvl({ 'w:val' => model.list_item_level })
+                xml['w'].numId({ 'w:val' => list_num })
+              end
             end
             xml['w'].ind({ 'w:left' => ls.style_left, 'w:hanging' => hanging })
             xml['w'].contextualSpacing({ 'w:val' => '1' })
