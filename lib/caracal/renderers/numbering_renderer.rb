@@ -25,7 +25,7 @@ module Caracal
               xml['w'].abstractNum({ 'w:abstractNumId' => i + 1 }) do
                 xml['w'].multiLevelType({ 'w:val' => 'hybridMultilevel' })
                 model.level_map.each do |(level, type)|
-                  if s = document.find_list_style(type, level, model.list_with_brackets)
+                  if s = document.find_list_style(type, level, model.list_numbering_text)
                     xml['w'].lvl({ 'w:ilvl' => s.style_level }) do
                       xml['w'].start({ 'w:val' => s.style_start })
                       xml['w'].numFmt({ 'w:val' => s.style_format })

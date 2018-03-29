@@ -20,7 +20,7 @@ module Caracal
           def self.default_list_styles
             [
               { type: :ordered,   level: 0, format: 'decimal',     value: '%1.',  left: 720, indent: 360 },
-              { type: :ordered,   level: 0, format: 'decimal',     value: '(%1)', left: 720, indent: 360, with_brackets: true },
+              { type: :ordered,   level: 0, format: 'decimal',     value: '(%1)', left: 360, indent: 0 },
               { type: :ordered,   level: 1, format: 'lowerLetter', value: '%2.', left: 1440, indent: 1080 },
               { type: :ordered,   level: 2, format: 'lowerRoman',  value: '%3.', left: 2160, indent: 1800, align: :right },
               { type: :ordered,   level: 3, format: 'decimal',     value: '%4.', left: 2880, indent: 2520 },
@@ -67,22 +67,22 @@ module Caracal
             @list_styles ||= []
           end
 
-          def find_list_style(type, level, with_brackets)
-            list_styles.find { |s| s.matches?(type, level, with_brackets) }
+          def find_list_style(type, level, numbering_text)
+            list_styles.find { |s| s.matches?(type, level, numbering_text) }
           end
 
 
           #============== REGISTRATION ========================
 
           def register_list_style(model)
-            unregister_list_style(model.style_type, model.style_level, model.style_with_brackets)
+            unregister_list_style(model.style_type, model.style_level, model.style_value)
             list_styles << model
 
             model
           end
 
-          def unregister_list_style(type, level, with_brackets)
-            if s = find_list_style(type, level, with_brackets)
+          def unregister_list_style(type, level, value)
+            if s = find_list_style(type, level, value)
               list_styles.delete(s)
             end
           end

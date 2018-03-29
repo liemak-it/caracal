@@ -18,7 +18,6 @@ module Caracal
         const_set(:DEFAULT_STYLE_ALIGN,   :left)
         const_set(:DEFAULT_STYLE_START,   1)
         const_set(:DEFAULT_STYLE_RESTART, 1)
-        const_set(:DEFAULT_STYLE_WITH_BRACKETS, false)
 
         # accessors
         attr_reader :style_type
@@ -30,7 +29,6 @@ module Caracal
         attr_reader :style_left
         attr_reader :style_indent
         attr_reader :style_restart
-        attr_reader :style_with_brackets
 
 
         # initialization
@@ -40,7 +38,6 @@ module Caracal
           @style_indent  = DEFAULT_STYLE_INDENT
           @style_start   = DEFAULT_STYLE_START
           @style_restart = DEFAULT_STYLE_RESTART
-          @style_with_brackets = DEFAULT_STYLE_WITH_BRACKETS
 
           super options, &block
         end
@@ -77,7 +74,7 @@ module Caracal
 
         # strings
         [:format, :value].each do |m|
-          define_method "#{ m }" do |value|
+          define_method "#{ m }" do |value = nil|
             instance_variable_set("@style_#{ m }", value.to_s)
           end
         end
@@ -89,17 +86,15 @@ module Caracal
           end
         end
 
-        # booleans
-        [:with_brackets].each do |m|
-          define_method"#{ m }" do |value|
-            instance_variable_set("@style_#{m}", !!value)
-          end
-        end
 
         #=============== STATE ================================
 
-        def matches?(type, level, with_brackets = false)
-          style_type == type.to_s.to_sym && style_level == level.to_i && style_with_brackets == with_brackets
+        def matches?(type, level, numbering_text)
+          unless numbering_text.blank?
+            style_type == type.to_s.to_sym && style_level == level.to_i && style_value == numbering_text
+          else
+            style_type == type.to_s.to_sym && style_level == level.to_i
+          end
         end
 
 
@@ -117,7 +112,7 @@ module Caracal
         private
 
         def option_keys
-          [:type, :level, :format, :value, :align, :left, :indent, :start, :with_brackets]
+          [:type, :level, :format, :value, :align, :left, :indent, :start]
         end
 
       end

@@ -24,7 +24,7 @@ module Caracal
         attr_reader  :list_item_type
         attr_reader  :list_item_level
         attr_reader  :list_item_no_bullets
-        attr_reader  :list_item_with_brackets
+        attr_reader  :list_item_numbering_text
 
         alias_method :list_item_style,     :paragraph_style
         alias_method :list_item_color,     :paragraph_color
@@ -56,8 +56,15 @@ module Caracal
           end
         end
 
+        # symbols
+        [:numbering_text].each do |m|
+          define_method "#{ m }" do |value|
+            instance_variable_set("@list_item_#{ m }", value.to_s)
+          end
+        end
+
         # booleans
-        [:no_bullets, :with_brackets].each do |m|
+        [:no_bullets].each do |m|
           define_method"#{ m }" do |value|
             instance_variable_set("@list_item_#{ m }", !!value)
           end
@@ -108,7 +115,7 @@ module Caracal
         private
 
         def option_keys
-          [:type, :level, :content, :style, :color, :size, :bold, :italic, :underline, :bgcolor, :no_bullets, :with_brackets]
+          [:type, :level, :content, :style, :color, :size, :bold, :italic, :underline, :bgcolor, :no_bullets, :numbering_text]
         end
 
       end
