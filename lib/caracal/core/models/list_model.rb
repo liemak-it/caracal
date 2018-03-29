@@ -20,18 +20,21 @@ module Caracal
         const_set(:DEFAULT_LIST_TYPE,  :unordered)
         const_set(:DEFAULT_LIST_LEVEL, 0)
         const_set(:DEFAULT_LIST_NO_BULLETS, false)
+        const_set(:DEFAULT_LIST_WITH_BRACKETS, false)
 
         # accessors
         attr_reader :list_type
         attr_reader :list_level
         attr_reader :list_no_bullets
+        attr_reader :list_with_brackets
 
 
         # initialization
         def initialize(options={}, &block)
-          @list_type       = DEFAULT_LIST_TYPE
-          @list_level      = DEFAULT_LIST_LEVEL
-          @list_no_bullets = DEFAULT_LIST_NO_BULLETS
+          @list_type          = DEFAULT_LIST_TYPE
+          @list_level         = DEFAULT_LIST_LEVEL
+          @list_no_bullets    = DEFAULT_LIST_NO_BULLETS
+          @list_with_brackets = DEFAULT_LIST_WITH_BRACKETS
 
           super options, &block
         end
@@ -91,7 +94,7 @@ module Caracal
         end
 
         # booleans
-        [:no_bullets].each do |m|
+        [:no_bullets, :with_brackets].each do |m|
           define_method"#{ m }" do |value|
             instance_variable_set("@list_#{m}", !!value)
           end
@@ -100,9 +103,17 @@ module Caracal
         # Convenient method to create list elements using an array
         def list_items(list_elements)
           @items = items
-          options = { type: list_type, level: 0, no_bullets: list_no_bullets }
+          puts
+          puts "self: #{self.inspect}"
+          puts "list_with_brackets: #{list_with_brackets.inspect}"
+          options = { type: list_type, level: 0, no_bullets: list_no_bullets, with_brackets: list_with_brackets }
+          puts ">>> options: #{options.inspect}"
+          puts "list_elements: #{list_elements.inspect}"
           list_elements.each do |item|
+            puts
+            puts "BEFORE options: #{options.inspect}"
             options[:content] = item
+            puts "AFTER options: #{options.inspect}"
             @items.push(Caracal::Core::Models::ListItemModel.new(options))
           end
         end
@@ -141,7 +152,7 @@ module Caracal
         private
 
         def option_keys
-          [:type, :level, :list_items, :no_bullets]
+          [:type, :level, :list_items, :no_bullets, :with_brackets]
         end
 
       end
