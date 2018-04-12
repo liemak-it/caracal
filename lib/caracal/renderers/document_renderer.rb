@@ -253,6 +253,8 @@ module Caracal
                 xml['w'].numId({ 'w:val' => list_num })
               end
               xml['w'].ind({ 'w:left' => ls.style_left, 'w:hanging' => hanging })
+            else
+              xml['w'].ind({ 'w:left' => ls.style_left })
             end
             xml['w'].contextualSpacing({ 'w:val' => '1' })
             xml['w'].rPr do
