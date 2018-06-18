@@ -19,6 +19,7 @@ require 'caracal/core/styles'
 require 'caracal/core/tables'
 require 'caracal/core/text'
 require 'caracal/core/text_fields'
+require 'caracal/core/text_field_groups'
 
 require 'caracal/renderers/app_renderer'
 require 'caracal/renderers/content_types_renderer'
@@ -62,7 +63,7 @@ module Caracal
     include Caracal::Core::Tables
     include Caracal::Core::Text
     include Caracal::Core::TextFields
-
+    include Caracal::Core::TextFieldGroups
 
     #-------------------------------------------------------------
     # Public Class Methods
