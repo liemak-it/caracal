@@ -198,7 +198,25 @@ module Caracal
         private
 
         def option_keys
-          [:border_color, :height, :id, :lock, :name, :offset_h, :offset_v, :paragraphs, :paragraph_style, :relative_from_h, :relative_from_v, :text, :width]
+          [
+            :border_color,
+            :bottom,
+            :height,
+            :id,
+            :left,
+            :lock,
+            :name,
+            :offset_h,
+            :offset_v,
+            :paragraph_style,
+            :paragraphs,
+            :relative_from_h,
+            :relative_from_v,
+            :right,
+            :text,
+            :top,
+            :width
+          ]
         end
 
         def pixels_to_emus(value, ppi)
