@@ -284,10 +284,13 @@ module Caracal
 
       def render_paragraph(xml, model)
         run_props = [:color, :size, :bold, :italic, :underline].map { |m| model.send("paragraph_#{ m }") }.compact
+        paragraph_style = document.find_style(model.paragraph_style) || document.default_style
+        paragraph_bottom = paragraph_style.style_bottom
 
         xml['w'].p paragraph_options do
           xml['w'].pPr do
             xml['w'].pStyle({ 'w:val' => model.paragraph_style })  unless model.paragraph_style.nil?
+            xml['w'].spacing({ 'w:lineRule' => 'auto', 'w:line' => paragraph_style.style_line, 'w:after' => paragraph_bottom }) unless ['0', nil].include?(paragraph_style.style_line)
             xml['w'].contextualSpacing({ 'w:val' => '0' })
             xml['w'].jc({ 'w:val' => model.paragraph_align })  unless model.paragraph_align.nil?
             render_run_attributes(xml, model, true)
