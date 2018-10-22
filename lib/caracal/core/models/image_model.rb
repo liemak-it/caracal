@@ -187,7 +187,8 @@ module Caracal
             :right,
             :top,
             :url,
-            :width
+            :width,
+            :wrap
           ]
         end
 
