@@ -135,6 +135,10 @@ module Caracal
       end
 
       def render_imagegroup(xml, model)
+        unless ds = document.default_style
+          raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
+        end
+
         xml['w'].p paragraph_options do
           model.image_models.each do |image_model|
             xml['w'].p paragraph_options do
@@ -144,6 +148,7 @@ module Caracal
                 xml['w'].jc({ 'w:val' => model.image_align.to_s })
                 xml['w'].rPr
               end
+
               render_image(xml, image_model)
             end
           end
@@ -151,10 +156,6 @@ module Caracal
       end
 
       def render_image(xml, model)
-        unless ds = document.default_style
-          raise Caracal::Errors::NoDefaultStyleError 'Document must declare a default paragraph style.'
-        end
-
         rel      = document.relationship({ type: :image, target: model.image_url, data: model.image_data })
         rel_id   = rel.relationship_id
         rel_name = rel.formatted_target
