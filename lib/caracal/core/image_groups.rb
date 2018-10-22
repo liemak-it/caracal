@@ -1,4 +1,4 @@
-require 'caracal/core/models/text_field_group_model'
+require 'caracal/core/models/image_group_model'
 require 'caracal/errors'
 
 
