@@ -7,6 +7,7 @@ require 'caracal/core/fonts'
 require 'caracal/core/iframes'
 require 'caracal/core/ignorables'
 require 'caracal/core/images'
+require 'caracal/core/image_groups'
 require 'caracal/core/list_styles'
 require 'caracal/core/lists'
 require 'caracal/core/namespaces'
@@ -57,6 +58,7 @@ module Caracal
 
     include Caracal::Core::IFrames
     include Caracal::Core::Images
+    include Caracal::Core::ImageGroups
     include Caracal::Core::Lists
     include Caracal::Core::PageBreaks
     include Caracal::Core::Rules
