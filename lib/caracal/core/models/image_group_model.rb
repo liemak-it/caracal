@@ -30,7 +30,7 @@ module Caracal
             id = image_counter.to_i + 1
             @image_counter = id
 
-            options = image_data[:image]
+            options = image_data[:img]
             options.merge!({ id: id, name: "Image #{id}" })
 
             image_model = Caracal::Core::Models::ImageModel.new(options)
