@@ -141,20 +141,18 @@ module Caracal
 
         xml['w'].p paragraph_options do
           model.image_models.each do |image_model|
-            xml['w'].p paragraph_options do
-              xml['w'].pPr do
-                xml['w'].spacing({ 'w:lineRule' => 'auto', 'w:line' => ds.style_line })
-                xml['w'].contextualSpacing({ 'w:val' => '0' })
-                xml['w'].jc({ 'w:val' => image_model.image_align.to_s })
-                xml['w'].rPr
-              end
+            xml['w'].pPr do
+              xml['w'].spacing({ 'w:lineRule' => 'auto', 'w:line' => ds.style_line })
+              xml['w'].contextualSpacing({ 'w:val' => '0' })
+              xml['w'].jc({ 'w:val' => image_model.image_align.to_s })
+              xml['w'].rPr
+            end
 
-              render_image(xml, image_model)
+            render_image(xml, image_model)
 
-              xml['w'].r run_options do
-                xml['w'].rPr do
-                  xml['w'].rtl({ 'w:val' => '0' })
-                end
+            xml['w'].r run_options do
+              xml['w'].rPr do
+                xml['w'].rtl({ 'w:val' => '0' })
               end
             end
           end
