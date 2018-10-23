@@ -215,7 +215,8 @@ module Caracal
             :right,
             :text,
             :top,
-            :width
+            :width,
+            :wrap
           ]
         end
 
