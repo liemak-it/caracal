@@ -151,7 +151,7 @@ module Caracal
 
         # hashes
         define_method "#{:header_style}" do |styling_info|
-          rows[0].each { |header_col| header_col.apply_styles(styling_info) }
+          rows[0].each { |header_col| header_col.apply_styles(styling_info) } if rows[0]
         end
 
         define_method "#{:body_style}" do |styling_info|
