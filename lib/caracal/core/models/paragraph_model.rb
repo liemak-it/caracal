@@ -115,7 +115,7 @@ module Caracal
         end
 
         # .page
-        def page
+        def page(*args)
           model = Caracal::Core::Models::PageBreakModel.new({ wrap: false })
           runs << model
           model
